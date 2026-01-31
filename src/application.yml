@@ -1,0 +1,41 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hotel-service
+          uri: http://hotel-service:8082
+          predicates:
+            - Path=/api/v1/hotels/**, /api/v1/countries/**, /api/v1/cities/**
+          filters:
+            - StripPrefix=1
+            
+        - id: session-service  
+          uri: http://session-service:8081
+          predicates:
+            - Path=/api/v1/auth/**, /api/v1/users/**
+          filters:
+            - StripPrefix=1
+            
+        - id: booking-service
+          uri: http://booking-service:8083  
+          predicates:
+            - Path=/api/v1/reservations/**
+          filters:
+            - StripPrefix=1
+            
+        - id: payment-service
+          uri: http://payment-service:8084
+          predicates:
+            - Path=/api/v1/payments/**
+          filters:
+            - StripPrefix=1
+            
+        - id: loyalty-service
+          uri: http://loyalty-service:8085
+          predicates:
+            - Path=/api/v1/loyalty/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8087
